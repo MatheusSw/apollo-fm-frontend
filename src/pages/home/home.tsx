@@ -1,6 +1,9 @@
-
 const Home: React.FC = () => {
-    return <>This is home bro</>
-}
+  return (
+    <div className="bg-red-500">
+      ddddddddddd
+    </div>
+  );
+};
 
 export default Home;

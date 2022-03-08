@@ -1,6 +1,5 @@
-
 const Settings: React.FC = () => {
-    return <></>
-}
+  return <></>;
+};
 
 export default Settings;
