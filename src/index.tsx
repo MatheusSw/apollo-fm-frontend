@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { RootRoutes } from "./routes/rootRoutes";
+import { RootRoutes } from "./routes/RootRoutes";
 
 const queryClient = new QueryClient();
 
