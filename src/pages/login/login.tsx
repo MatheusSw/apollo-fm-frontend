@@ -1,5 +1,4 @@
 import { AxiosInstance } from "axios";
-import { useState } from "react";
 
 interface LoginProps {
   backendClient: AxiosInstance;
