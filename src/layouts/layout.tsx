@@ -2,9 +2,9 @@ import Navbar from "../components/navbar/Navbar";
 
 const Layout: React.FC = ({ children }) => {
   return (
-    <div className="flex">
+    <div className="flex text-gray-800 antialiased">
       <Navbar />
-      <main className="flex min-w-max">{children}</main>
+      <main className="flex w-screen">{children}</main>
     </div>
   );
 };

@@ -6,7 +6,7 @@ import NavButton from "../navbutton/Navbutton";
 
 const Navbar: React.FC = () => {
   return (
-    <div className="flex min-h-screen flex-col space-y-16 bg-pastel-amber py-14 antialiased">
+    <div className="flex min-h-screen flex-shrink-0 flex-grow-0 flex-col space-y-16 bg-pastel-amber py-14">
       <span className="mx-auto text-3xl font-bold md:text-6xl">Apollo</span>
       <div
         className="flex flex-col flex-wrap items-center"
@@ -20,25 +20,22 @@ const Navbar: React.FC = () => {
           Eternal Summer - The Strokes
         </div>
       </div>
-      <nav className="flex flex-grow flex-col flex-wrap items-center space-y-6 max-w-xs">
+      <nav className="flex max-w-xs flex-grow flex-col flex-wrap items-center space-y-6">
         <NavButton icon={faHouse} text="Home" to="/" />
         <NavButton icon={faGear} text="Settings" to="/settings" />
-        <NavButton
-          icon={faGear}
-          text="Hey have you tried to do something?"
-          to="/settings"
-        />
       </nav>
       <div className="flex flex-1 flex-col flex-nowrap items-center justify-end">
         <a
           href="logout"
-          className="group flex text-lg font-semibold text-gray-500 transition-colors duration-200 hover:text-gray-400"
+          className="group flex text-lg font-semibold text-gray-500 transition-all duration-200 hover:text-gray-400"
         >
           <span className="mr-5 flex flex-shrink-0">
             <FontAwesomeIcon icon={faDoorOpen} size="lg" />
           </span>
           Logout
-          <span className="ml-3 scale-0 group-hover:scale-100">:(</span>
+          <span className="ml-3 scale-0 transition-transform duration-500 group-hover:scale-100">
+            :(
+          </span>
         </a>
       </div>
     </div>

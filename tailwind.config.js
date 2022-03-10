@@ -12,7 +12,10 @@ module.exports = {
         "pastel-orange": "#F9BA3D",
         "pastel-amber": "#FAF7F5",
       },
+      screens: {
+        lg: "1025px",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
