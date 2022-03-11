@@ -1,5 +1,6 @@
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "../../logo.svg";
 import NavButton from "../navbutton/Navbutton";
 
@@ -65,6 +66,13 @@ const Navbar: React.FC = () => {
                     />
                   </Popover.Button>
                 </div>
+              </div>
+              <div className="mt-6">
+                <nav className="grid gap-y-4">
+                  {/*[TODO] Make a component out of this or adapt the NavButton*/}
+                  <NavButton icon="fas fa-house" to="/" text="Home" />
+                  <NavButton icon="fas fa-gear" to="/settings" text="Settings" />
+                </nav>
               </div>
             </div>
           </div>
