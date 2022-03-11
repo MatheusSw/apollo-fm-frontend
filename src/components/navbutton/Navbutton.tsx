@@ -13,13 +13,13 @@ const NavButton: React.FC<NavButtonProps> = ({ icon, to }) => {
         `flex items-center rounded-full py-3 px-3 text-lg font-semibold transition-colors duration-300
         ${
           isActive
-            ? "bg-magenta text-white"
+            ? "bg-magenta text-white hover:bg-white hover:text-magenta"
             : "text-magenta hover:text-gray-400"
         }`
       }
     >
       <span className="flex-shrink-0">
-        <i className={`${icon} fa-xl`} />
+        <i className={`${icon} fa-lg`} />
       </span>
     </NavLink>
   );
