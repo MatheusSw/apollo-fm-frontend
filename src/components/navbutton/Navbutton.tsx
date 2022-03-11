@@ -10,7 +10,7 @@ const NavButton: React.FC<NavButtonProps> = ({ icon, to }) => {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center rounded-full py-3 px-3 text-lg font-semibold transition-colors duration-300
+        `flex items-center rounded-full py-3 px-4 text-lg font-semibold transition-colors duration-300
         ${
           isActive
             ? "bg-magenta text-white hover:bg-white hover:text-magenta"
