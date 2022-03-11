@@ -1,30 +1,26 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 
 interface NavButtonProps {
-  icon: IconProp;
-  text: string;
+  icon: string;
   to: string;
 }
 
-const NavButton: React.FC<NavButtonProps> = ({ icon, text, to }) => {
+const NavButton: React.FC<NavButtonProps> = ({ icon, to }) => {
   return (
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center rounded-xl py-3 px-12 text-lg font-semibold
+        `flex items-center rounded-full py-3 px-3 text-lg font-semibold transition-colors duration-300
         ${
           isActive
-            ? "bg-black text-white transition-colors duration-300 hover:bg-magenta"
-            : "text-gray-500 transition-colors duration-200 hover:text-gray-400"
+            ? "bg-magenta text-white"
+            : "text-magenta hover:text-gray-400"
         }`
       }
     >
-      <span className="mr-5 flex-shrink-0">
-        <FontAwesomeIcon icon={icon} />
+      <span className="flex-shrink-0">
+        <i className={`${icon} fa-xl`} />
       </span>
-      <span className="break-all">{text}</span>
     </NavLink>
   );
 };
