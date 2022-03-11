@@ -16,19 +16,15 @@ export const RootRoutes: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <Home />
-            </Layout>
-          }
-        />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/settings" element={<Settings />} />
+        </Route>
+
         <Route
           path="/login"
           element={<Login backendClient={backendClient} />}
         />
-        <Route path="/settings" element={<Settings />} />
       </Routes>
     </QueryClientProvider>
   );

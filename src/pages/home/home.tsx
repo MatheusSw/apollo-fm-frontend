@@ -48,7 +48,6 @@ const Home: React.FC = () => {
             backgroundColor="bg-light-amber"
           />
         </div>
-        <div>kkkkkkkkkkkkkkkkk</div>
       </div>
     </div>
   );

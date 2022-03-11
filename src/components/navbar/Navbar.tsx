@@ -2,12 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import { ReactComponent as Logo } from "../../logo.svg";
 import NavButton from "../navbutton/Navbutton";
 
 const Navbar: React.FC = () => {
   return (
     <div className="flex min-h-screen flex-shrink-0 flex-grow-0 flex-col space-y-16 bg-pastel-amber py-14">
-      <span className="mx-auto text-3xl font-bold md:text-6xl">Apollo</span>
+      <Logo className="mx-auto fill-magenta w-16"/>
       <div
         className="flex flex-col flex-wrap items-center"
         id="sidebar-now-playing-container"
