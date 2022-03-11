@@ -1,44 +1,83 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
-import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment } from "react";
+import { ReactComponent as Logo } from "../../logo.svg";
 import NavButton from "../navbutton/Navbutton";
 
 const Navbar: React.FC = () => {
   return (
-    <div className="flex min-h-screen flex-shrink-0 flex-grow-0 flex-col space-y-16 bg-pastel-amber py-14">
-      <span className="mx-auto text-3xl font-bold md:text-6xl">Apollo</span>
-      <div
-        className="flex flex-col flex-wrap items-center"
-        id="sidebar-now-playing-container"
-      >
-        <span className="text-base font-semibold">Now Scrobbling</span>
-        <div
-          className="m-3 rounded-lg bg-dark-yellow p-3 text-sm font-semibold shadow-sm"
-          id="sidebar-now-playing-square"
+    <Popover className="relative flex w-full flex-col justify-center py-6 md:min-h-screen md:w-1/12 md:flex-row md:py-12">
+      <div className="flex items-center justify-between md:flex-col md:gap-40">
+        <div className="ml-6">
+          <Logo className="mx-auto w-10 fill-magenta md:w-16" />
+        </div>
+        <div className="mr-6 justify-end md:hidden">
+          <Popover.Button>
+            <span className="sr-only">Open menu</span>
+            <i className="fa-solid fa-bars fa-lg" aria-hidden="true" />
+          </Popover.Button>
+        </div>
+        <Popover.Group
+          as="nav"
+          className="hidden flex-grow items-center md:flex md:flex-col md:flex-wrap md:gap-8"
         >
-          Eternal Summer - The Strokes
+          <NavButton icon="fas fa-house" to="/" />
+          <NavButton icon="fas fa-gear" to="/settings" />
+        </Popover.Group>
+
+        <div className="hidden md:flex md:flex-col md:items-center md:justify-end">
+          <a
+            href="logout"
+            className="group flex text-lg font-semibold text-magenta transition-all duration-500 hover:text-gray-400"
+          >
+            <span className="flex flex-shrink-0">
+              <i className="fa-solid fa-door-open fa-lg" />
+            </span>
+          </a>
         </div>
       </div>
-      <nav className="flex max-w-xs flex-grow flex-col flex-wrap items-center space-y-6">
-        <NavButton icon={faHouse} text="Home" to="/" />
-        <NavButton icon={faGear} text="Settings" to="/settings" />
-      </nav>
-      <div className="flex flex-1 flex-col flex-nowrap items-center justify-end">
-        <a
-          href="logout"
-          className="group flex text-lg font-semibold text-gray-500 transition-all duration-200 hover:text-gray-400"
+
+      <Transition
+        as={Fragment}
+        enter="duration-200 ease-out"
+        enterFrom="opacity-0 scale-95"
+        enterTo="opacity-100 scale-100"
+        leave="duration-100 ease-in"
+        leaveFrom="opacity-100 scale-100"
+        leaveTo="opacity-0 scale-95"
+      >
+        <Popover.Panel
+          focus
+          className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
         >
-          <span className="mr-5 flex flex-shrink-0">
-            <FontAwesomeIcon icon={faDoorOpen} size="lg" />
-          </span>
-          Logout
-          <span className="ml-3 scale-0 transition-transform duration-500 group-hover:scale-100">
-            :(
-          </span>
-        </a>
-      </div>
-    </div>
+          {/* Shout-out to my tailwindui guys!!! <3 */}
+          <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+            <div className="px-5 pt-5 pb-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Logo className="mx-auto w-10 fill-magenta md:w-16" />
+                </div>
+                <div className="-mr-2">
+                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-magenta">
+                    <span className="sr-only">Close menu</span>
+                    <i
+                      className="fa-solid fa-xmark fa-xl p-2"
+                      aria-hidden="true"
+                    />
+                  </Popover.Button>
+                </div>
+              </div>
+              <div className="mt-6">
+                <nav className="grid gap-y-4">
+                  {/*[TODO] Make a component out of this or adapt the NavButton*/}
+                  <NavButton icon="fas fa-house" to="/" text="Home" />
+                  <NavButton icon="fas fa-gear" to="/settings" text="Settings" />
+                </nav>
+              </div>
+            </div>
+          </div>
+        </Popover.Panel>
+      </Transition>
+    </Popover>
   );
 };
 
