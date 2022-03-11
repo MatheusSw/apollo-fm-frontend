@@ -1,3 +1,8 @@
+# Current preview of the app
+
+![Home Page](https://i.imgur.com/68Indhb.png)
+![Login](https://i.imgur.com/6XdTuQx.png)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
