@@ -1,6 +1,5 @@
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "../../logo.svg";
 import NavButton from "../navbutton/Navbutton";
 
