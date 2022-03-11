@@ -1,4 +1,5 @@
-import { Popover } from "@headlessui/react";
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment } from "react";
 import { ReactComponent as Logo } from "../../logo.svg";
 import NavButton from "../navbutton/Navbutton";
 
@@ -34,6 +35,41 @@ const Navbar: React.FC = () => {
           </a>
         </div>
       </div>
+
+      <Transition
+        as={Fragment}
+        enter="duration-200 ease-out"
+        enterFrom="opacity-0 scale-95"
+        enterTo="opacity-100 scale-100"
+        leave="duration-100 ease-in"
+        leaveFrom="opacity-100 scale-100"
+        leaveTo="opacity-0 scale-95"
+      >
+        <Popover.Panel
+          focus
+          className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
+        >
+          {/* Shout-out to my tailwindui guys!!! <3 */}
+          <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+            <div className="px-5 pt-5 pb-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Logo className="mx-auto w-10 fill-magenta md:w-16" />
+                </div>
+                <div className="-mr-2">
+                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-magenta">
+                    <span className="sr-only">Close menu</span>
+                    <i
+                      className="fa-solid fa-xmark fa-xl p-2"
+                      aria-hidden="true"
+                    />
+                  </Popover.Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Popover.Panel>
+      </Transition>
     </Popover>
   );
 };
