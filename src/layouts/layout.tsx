@@ -3,7 +3,7 @@ import Navbar from "../components/navbar/Navbar";
 
 const Layout: React.FC = ({ children }) => {
   return (
-    <div className="flex flex-col text-gray-800 antialiased md:flex-row">
+    <div className="flex flex-col text-gray-800 antialiased md:flex-row bg-pastel-amber">
       <Navbar />
       <main className="flex w-full">
         <Outlet />

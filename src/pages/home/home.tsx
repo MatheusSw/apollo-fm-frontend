@@ -1,26 +1,16 @@
 import Card from "../../components/card/Card";
+import { Header } from "../../components/header/Header";
+import { Avatar } from "../../components/avatar/Avatar";
 
 const Home: React.FC = () => {
   return (
     <div className="w-full px-10 py-16">
-      <header className="mx-6 flex flex-wrap justify-between">
-        <div className="flex flex-col">
-          <span className="mb-2 text-4xl font-bold">Hey there, pretty!</span>
-          <span className="text-xl font-medium">
-            It’s always nice to have you here
-          </span>
-        </div>
-        <div className="mt-6 flex items-center md:mt-0">
-          <span className="h-16 w-16 overflow-hidden rounded-full">
-            <img
-              src={`${process.env.PUBLIC_URL}/portrait.jpg`}
-              alt="Your twitter profile"
-              className="h-full w-full object-cover"
-            />
-          </span>
-          <span className="ml-4 text-2xl font-bold">Paris Doe</span>
-        </div>
-      </header>
+      <Header
+        title="Hey there, pretty!"
+        subtitle="It’s always nice to have you here"
+      >
+        <Avatar name="Paris Doe" />
+      </Header>
       <div className="mx-6 grid">
         <div className="col-span-3 mt-12 grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
           <Card
