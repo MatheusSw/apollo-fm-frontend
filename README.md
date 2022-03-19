@@ -1,6 +1,8 @@
+# WORK IN PROGRESS
+
 # Current preview of the app
 
-![Home Page](https://i.imgur.com/68Indhb.png)
+![Home Page](https://i.imgur.com/l1DPFMR.png)
 ![Login](https://i.imgur.com/6XdTuQx.png)
 
 # Getting Started with Create React App
