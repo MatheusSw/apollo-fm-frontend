@@ -1,32 +1,28 @@
-import { AxiosInstance } from "axios";
-import { useState } from "react";
+import React from "react";
 import { ReactComponent as Logo } from "../../logo.svg";
+import { apiClient } from "../../clients/apiClient";
+import { store } from "../../stores/store";
+import { useError } from "../../hooks/useError";
+import { useLoading } from "../../hooks/useLoading";
 
-interface LoginProps {
-  backendClient: AxiosInstance;
-}
-
-const Login: React.FC<LoginProps> = ({ backendClient }) => {
-  const [error, setError] = useState(false);
-  const [load, setLoad] = useState(false);
+const Login: React.FC = () => {
+  const error = useError();
+  const loading = useLoading();
 
   const twitterLogin = async (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    setError(false);
-    setLoad(true);
+    store.dispatch.error.setError(false);
+    store.dispatch.loading.setLoading(true);
 
     try {
-      var response = await backendClient.post("logins/twitter");
+      await apiClient.get("sanctum/csrf-cookie");
 
-      //This is really really bad, however due to twitter cors policy it's not possible to redirect directly
-      //Should be fixed when we host with netlify
-      //https://stackoverflow.com/questions/35879943/twitter-api-authorization-fails-cors-preflight-in-browser
-      window.location = response.data;
+      window.location.replace(`${apiClient.defaults.baseURL}/logins/twitter`);
     } catch {
-      setError(true);
+      store.dispatch.error.setError(true);
     } finally {
-      setLoad(false);
+      store.dispatch.loading.setLoading(false);
     }
   };
 
@@ -35,7 +31,7 @@ const Login: React.FC<LoginProps> = ({ backendClient }) => {
       <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div className="flex flex-col gap-6">
-            <div className="flex gap-4 items-center">
+            <div className="flex items-center gap-4">
               <Logo className="h-16 w-16 fill-magenta" />
               <span className="text-5xl font-extrabold text-magenta">
                 Apollo
@@ -50,7 +46,7 @@ const Login: React.FC<LoginProps> = ({ backendClient }) => {
               Sign in to your account
             </h2>
           </div>
-          <div className="flex flex-grow flex-wrap justify-between gap-5 mt-3">
+          <div className="mt-3 flex flex-grow flex-wrap justify-between gap-5">
             {error && (
               <span className="w-full rounded-lg bg-red-500 p-2 text-center text-sm font-medium text-white">
                 Oh no! There has been a problem with your login, please try
@@ -65,10 +61,9 @@ const Login: React.FC<LoginProps> = ({ backendClient }) => {
                 type="submit"
                 className="flex w-full items-center justify-center gap-4"
               >
-                {load ? (
+                {loading ? (
                   <>
                     <i className="fa-solid fa-spinner fa-2x animate-spin" />
-                    <span className="font-medium">Energizing...</span>
                   </>
                 ) : (
                   <i className="fa-brands fa-twitter fa-2x" />

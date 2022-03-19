@@ -1,15 +1,19 @@
 import Card from "../../components/card/Card";
 import { Header } from "../../components/header/Header";
 import { Avatar } from "../../components/avatar/Avatar";
+import { useAuth } from "../../hooks/useAuth";
+import React from "react";
 
 const Home: React.FC = () => {
+  const { me } = useAuth();
+
   return (
     <div className="w-full px-10 py-16">
       <Header
         title="Hey there, pretty!"
         subtitle="It’s always nice to have you here"
       >
-        <Avatar name="Paris Doe" />
+        <Avatar name={me!.name} picture_url={me!.profile_picture_url} />
       </Header>
       <div className="mx-6 grid">
         <div className="col-span-3 mt-12 grid gap-12 sm:grid-cols-1 lg:grid-cols-3">

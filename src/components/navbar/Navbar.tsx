@@ -1,9 +1,14 @@
 import { Popover, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { ReactComponent as Logo } from "../../logo.svg";
 import NavButton from "../navbutton/Navbutton";
+import { apiClient } from "../../clients/apiClient";
 
 const Navbar: React.FC = () => {
+  const handleLogout = async () => {
+    await apiClient.post("api/logout");
+  };
+
   return (
     <Popover className="relative flex w-full flex-col justify-center py-6 md:min-h-screen md:w-1/12 md:flex-row md:py-12">
       <div className="flex items-center justify-between md:flex-col md:gap-40">
@@ -25,14 +30,16 @@ const Navbar: React.FC = () => {
         </Popover.Group>
 
         <div className="hidden md:flex md:flex-col md:items-center md:justify-end">
-          <a
-            href="logout"
-            className="group flex text-lg font-semibold text-magenta transition-all duration-500 hover:text-gray-400"
-          >
-            <span className="flex flex-shrink-0">
-              <i className="fa-solid fa-door-open fa-lg" />
-            </span>
-          </a>
+          <form onSubmit={handleLogout}>
+            <button
+              type="submit"
+              className="group flex text-lg font-semibold text-magenta transition-all duration-500 hover:text-gray-400"
+            >
+              <span className="flex flex-shrink-0">
+                <i className="fa-solid fa-door-open fa-lg" />
+              </span>
+            </button>
+          </form>
         </div>
       </div>
 
@@ -70,7 +77,11 @@ const Navbar: React.FC = () => {
                 <nav className="grid gap-y-4">
                   {/*[TODO] Make a component out of this or adapt the NavButton*/}
                   <NavButton icon="fas fa-house" to="/" text="Home" />
-                  <NavButton icon="fas fa-gear" to="/settings" text="Settings" />
+                  <NavButton
+                    icon="fas fa-gear"
+                    to="/settings"
+                    text="Settings"
+                  />
                 </nav>
               </div>
             </div>
