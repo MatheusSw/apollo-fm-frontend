@@ -3,6 +3,7 @@ import { Header } from "../../components/header/Header";
 import { Avatar } from "../../components/avatar/Avatar";
 import { useAuth } from "../../hooks/useAuth";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   const { me } = useAuth();
@@ -15,8 +16,17 @@ const Home: React.FC = () => {
       >
         <Avatar name={me!.name} picture_url={me!.profile_picture_url} />
       </Header>
-      <div className="mx-6 grid">
-        <div className="col-span-3 mt-12 grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
+      <div className="mx-6 mt-12">
+        {!me!.lastfm_user && (
+          <div className="mb-4 rounded-md bg-yellow-400 p-2">
+            Hey, it looks like you don't have a Lastfm set-up, head to{" "}
+            <Link to="settings" className="font-bold">
+              Settings
+            </Link>{" "}
+            and set it up!
+          </div>
+        )}
+        <div className="col-span-3 grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
           <Card
             title="Scrobbles"
             icon="fas fa-play"

@@ -9,9 +9,9 @@ import React from "react";
 export const RootRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<RequireAuth />}>
+      <Route element={<RequireAuth />}>
         <Route element={<Layout />}>
-          <Route element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Route>
