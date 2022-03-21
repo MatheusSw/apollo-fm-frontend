@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { apiClient } from "../../clients/apiClient";
 import { Strip, StripTypes } from "../../components/strip/Strip";
 import { useAuth } from "../../hooks/useAuth";
+import "react-datetime/css/react-datetime.css";
+import DateTime from "react-datetime";
+import moment from "moment";
 
 const Settings: React.FC = () => {
   const [error, setError] = useState(false);
@@ -11,6 +14,8 @@ const Settings: React.FC = () => {
 
   const [reportText, setReportText] = useState("");
   const [lastFmUser, setLastFmUser] = useState("");
+  const [reportDay, setReportDay] = useState("");
+  const [reportTime, setReportTime] = useState("");
 
   const handleSettingsSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -21,6 +26,8 @@ const Settings: React.FC = () => {
       const response = await apiClient.put("api/settings", {
         report_text: reportText,
         lastfm_user: lastFmUser,
+        report_day: reportDay === "" ? me!.report_day : reportDay,
+        report_time: reportTime,
       });
       setSuccess(true);
     } catch {
@@ -32,7 +39,7 @@ const Settings: React.FC = () => {
     <div className="w-full">
       <Header title="Settings" />
       <form
-        className="flex w-1/4 flex-col gap-4"
+        className="lg:1/4 flex w-full flex-col gap-4 md:w-2/4"
         onSubmit={handleSettingsSubmit}
       >
         {error && (
@@ -55,11 +62,10 @@ const Settings: React.FC = () => {
               id="report_text"
               name="report_text"
               rows={3}
+              defaultValue={me!.report_text}
               className="block w-full rounded-md border-0 shadow-sm focus:border-magenta focus:ring-magenta sm:text-sm"
               onChange={(e) => setReportText(e.target.value)}
-            >
-              {me!.report_text}
-            </textarea>
+            />
             <p className="mt-2 text-sm text-gray-500">
               Supported placeholders are: {"{artists}"}, {"{tracks}"}
             </p>
@@ -82,6 +88,48 @@ const Settings: React.FC = () => {
               onChange={(e) => setLastFmUser(e.target.value)}
             />
           </div>
+        </div>
+        <div>
+          <label
+            htmlFor="report_schedule"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Report schedule
+          </label>
+          <div className="mt-1 flex gap-2">
+            <div>
+              <select
+                className="text-md block w-full appearance-none rounded-md border-0 py-3 px-4 pr-8 leading-tight text-gray-700 focus:ring-magenta"
+                id="report_day"
+                name="report_day"
+                onChange={(e) => setReportDay(e.target.value)}
+                defaultValue={me!.report_day}
+              >
+                {moment.weekdays().map((day) => (
+                  <option value={day} key={day}>
+                    {day}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <DateTime
+              dateFormat={false}
+              /*Thanks javascript for not having a decent constructor*/
+              initialValue={moment(`1970-01-01T${me!.report_time}`)}
+              inputProps={{
+                className: "rounded-lg border-0 focus:ring-magenta text-md",
+              }}
+              onChange={(e) => {
+                if (moment.isMoment(e)) {
+                  setReportTime(e.format("HH:mm:ssZ"));
+                }
+              }}
+            />
+          </div>
+          <span className="text-sm text-gray-500 opacity-50">
+            Your current timezone is{" "}
+            {Intl.DateTimeFormat().resolvedOptions().timeZone.replace("_", " ")}
+          </span>
         </div>
         <button
           type="submit"
