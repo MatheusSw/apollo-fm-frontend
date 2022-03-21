@@ -3,28 +3,35 @@ import { Header } from "../../components/header/Header";
 import { Avatar } from "../../components/avatar/Avatar";
 import { useAuth } from "../../hooks/useAuth";
 import React from "react";
+import { Strip, StripTypes } from "../../components/strip/Strip";
 import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   const { me } = useAuth();
 
   return (
-    <div className="w-full px-10 py-16">
+    <div className="w-full">
       <Header
         title="Hey there, pretty!"
         subtitle="It’s always nice to have you here"
       >
         <Avatar name={me!.name} picture_url={me!.profile_picture_url} />
       </Header>
-      <div className="mx-6 mt-12">
+      <div>
         {!me!.lastfm_user && (
-          <div className="mb-4 rounded-md bg-yellow-400 p-2">
-            Hey, it looks like you don't have a Lastfm set-up, head to{" "}
-            <Link to="settings" className="font-bold">
-              Settings
-            </Link>{" "}
-            and set it up!
-          </div>
+          <Strip
+            text={
+              <>
+                Hey, it looks like you don't have a LastFm account set-up, head
+                to{" "}
+                <Link to="settings" className="font-bold">
+                  Settings
+                </Link>{" "}
+                and set it up!
+              </>
+            }
+            type={StripTypes.warning}
+          />
         )}
         <div className="col-span-3 grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
           <Card
@@ -41,7 +48,7 @@ const Home: React.FC = () => {
             value="32"
             text="new lovers"
             status="+3% vs last month"
-            backgroundColor="bg-light-yellow"
+            backgroundColor="bg-light-blue"
           />
           <Card
             title="Listening time"

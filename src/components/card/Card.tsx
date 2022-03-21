@@ -16,10 +16,10 @@ const Card: React.FC<CardProps> = ({
   backgroundColor,
 }) => {
   return (
-    <div className={`rounded-2xl ${backgroundColor} px-10 py-6`}>
+    <div className={`rounded-2xl ${backgroundColor} px-10 py-6 text-white`}>
       <div className="mb-6 flex flex-grow-0 flex-wrap items-center justify-start gap-5">
-        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white bg-opacity-40">
-          <i className={`${icon} fa-xl`} />
+        <div className="flex h-12 w-12 items-center justify-center rounded-lg">
+          <i className={`${icon} fa-2xl`} />
         </div>
         <span className="ml-2 text-3xl font-bold">{title}</span>
       </div>
@@ -27,7 +27,7 @@ const Card: React.FC<CardProps> = ({
         <span className="text-6xl font-bold">{value}</span>
         <span className="text-2xl font-medium">{text}</span>
       </div>
-      <span className="font-semibold text-pastel-orange">{status}</span>
+      <span className="font-semibold text-white opacity-50">{status}</span>
     </div>
   );
 };

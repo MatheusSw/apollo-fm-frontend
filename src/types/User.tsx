@@ -3,4 +3,5 @@ export type User = {
   screen_name: string;
   profile_picture_url: string;
   lastfm_user?: string;
+  report_text: string;
 };
