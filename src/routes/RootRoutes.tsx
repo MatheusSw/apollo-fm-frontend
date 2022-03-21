@@ -4,17 +4,15 @@ import Home from "../pages/home/home";
 import Login from "../pages/login/login";
 import Settings from "../pages/settings/settings";
 import { RequireAuth } from "./RequireAuth";
-import React, { useState } from "react";
+import React from "react";
 
 export const RootRoutes: React.FC = () => {
-  const [error, setError] = useState(false);
-
   return (
     <Routes>
-      <Route element={<RequireAuth />}>
+      <Route path="/" element={<RequireAuth />}>
         <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route element={<Home />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Route>
 
