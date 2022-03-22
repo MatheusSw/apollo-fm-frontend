@@ -23,12 +23,13 @@ const Settings: React.FC = () => {
     setSuccess(false);
 
     try {
-      const response = await apiClient.put("api/settings", {
-        report_text: reportText,
-        lastfm_user: lastFmUser,
+      await apiClient.put("api/settings", {
+        report_text: reportText === "" ? me!.report_text : reportText,
+        lastfm_user: lastFmUser === "" ? me!.lastfm_user : lastFmUser,
         report_day: reportDay === "" ? me!.report_day : reportDay,
-        report_time: reportTime,
+        report_time: reportTime === "" ? me!.report_time : reportTime,
       });
+      //TODO Update user
       setSuccess(true);
     } catch {
       setError(true);
