@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import { ReactComponent as Logo } from "../../logo.svg";
 import NavButton from "../navbutton/Navbutton";
 import { apiClient } from "../../clients/apiClient";
+import { NavLink } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const handleLogout = async () => {
@@ -13,7 +14,9 @@ const Navbar: React.FC = () => {
     <Popover className="relative flex w-full flex-col justify-center py-6 md:min-h-screen md:w-1/12 md:flex-row md:py-12">
       <div className="flex items-center justify-between md:flex-col md:gap-40">
         <div className="ml-6">
-          <Logo className="mx-auto w-10 fill-magenta md:w-16" />
+          <NavLink to={"/"}>
+            <Logo className="mx-auto w-10 fill-magenta md:w-16" />
+          </NavLink>
         </div>
         <div className="mr-6 justify-end md:hidden">
           <Popover.Button>
