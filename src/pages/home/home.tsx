@@ -1,50 +1,60 @@
 import Card from "../../components/card/Card";
+import { Header } from "../../components/header/Header";
+import { Avatar } from "../../components/avatar/Avatar";
+import { useAuth } from "../../hooks/useAuth";
+import React from "react";
+import { Strip, StripTypes } from "../../components/strip/Strip";
+import { Link } from "react-router-dom";
+
+const abbreviate = require("number-abbreviate");
 
 const Home: React.FC = () => {
+  const { me } = useAuth();
+
   return (
-    <div className="w-full px-10 py-16">
-      <header className="mx-6 flex flex-wrap justify-between">
-        <div className="flex flex-col">
-          <span className="mb-2 text-4xl font-bold">Hey there, pretty!</span>
-          <span className="text-xl font-medium">
-            It’s always nice to have you here
-          </span>
-        </div>
-        <div className="mt-6 flex items-center md:mt-0">
-          <span className="h-16 w-16 overflow-hidden rounded-full">
-            <img
-              src={`${process.env.PUBLIC_URL}/portrait.jpg`}
-              alt="Your twitter profile"
-              className="h-full w-full object-cover"
-            />
-          </span>
-          <span className="ml-4 text-2xl font-bold">Paris Doe</span>
-        </div>
-      </header>
-      <div className="mx-6 grid">
-        <div className="col-span-3 mt-12 grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
+    <div className="w-full">
+      <Header
+        title="Hey there, pretty!"
+        subtitle="It’s always nice to have you here"
+      >
+        <Avatar name={me!.name} picture_url={me!.profile_picture_url} />
+      </Header>
+      <div>
+        {!me!.lastfm_user && (
+          <Strip
+            text={
+              <>
+                Hey, it looks like you don't have a LastFm account set-up, head
+                to{" "}
+                <Link to="settings" className="font-bold">
+                  Settings
+                </Link>{" "}
+                and set it up!
+              </>
+            }
+            type={StripTypes.warning}
+          />
+        )}
+        <div className="col-span-3 grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
           <Card
             title="Scrobbles"
-            icon="fas fa-play"
-            value="134"
+            icon="fas fa-headphones-simple"
+            value={abbreviate(me!.monthly_scrobbles, 1)}
             text="plays"
-            status="same as last month"
             backgroundColor="bg-light-purple"
           />
           <Card
             title="Loved Tracks"
             icon="fas fa-heart"
-            value="32"
-            text="new lovers"
-            status="+3% vs last month"
-            backgroundColor="bg-light-yellow"
+            value={abbreviate(me!.monthly_loved_tracks, 1)}
+            text="new crushes"
+            backgroundColor="bg-light-blue"
           />
           <Card
-            title="Listening time"
-            icon="fas fa-hourglass"
-            value="3h"
-            text="of pure music"
-            status="-25% vs last month"
+            title="Artists"
+            icon="fas fa-compact-disc"
+            value={abbreviate(me!.monthly_artists, 1)}
+            text="musicians!"
             backgroundColor="bg-light-amber"
           />
         </div>
