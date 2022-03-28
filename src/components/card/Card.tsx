@@ -2,7 +2,6 @@ interface CardProps {
   title: string;
   value: string | number;
   text: string;
-  status: string;
   backgroundColor: string;
   icon: any;
 }
@@ -11,7 +10,6 @@ const Card: React.FC<CardProps> = ({
   title,
   value,
   text,
-  status,
   icon,
   backgroundColor,
 }) => {
@@ -27,7 +25,6 @@ const Card: React.FC<CardProps> = ({
         <span className="text-6xl font-bold">{value}</span>
         <span className="text-2xl font-medium">{text}</span>
       </div>
-      <span className="font-semibold text-white opacity-50">{status}</span>
     </div>
   );
 };

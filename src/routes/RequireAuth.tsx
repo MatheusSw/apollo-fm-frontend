@@ -10,7 +10,7 @@ export const RequireAuth: React.FC = () => {
   const auth = useAuth();
   const location = useLocation();
 
-  const { isError, data, isLoading } = useQuery("user", fetchUser, {
+  const { isError, isLoading } = useQuery("user", fetchUser, {
     retry: false,
     onSuccess: (data) => {
       dispatch.auth.login(data);

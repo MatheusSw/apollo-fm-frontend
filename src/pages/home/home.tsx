@@ -41,7 +41,6 @@ const Home: React.FC = () => {
             icon="fas fa-headphones-simple"
             value={abbreviate(me!.monthly_scrobbles, 1)}
             text="plays"
-            status="same as last month"
             backgroundColor="bg-light-purple"
           />
           <Card
@@ -49,7 +48,6 @@ const Home: React.FC = () => {
             icon="fas fa-heart"
             value={abbreviate(me!.monthly_loved_tracks, 1)}
             text="new crushes"
-            status="+3% vs last month"
             backgroundColor="bg-light-blue"
           />
           <Card
@@ -57,7 +55,6 @@ const Home: React.FC = () => {
             icon="fas fa-compact-disc"
             value={abbreviate(me!.monthly_artists, 1)}
             text="musicians!"
-            status="-25% vs last month"
             backgroundColor="bg-light-amber"
           />
         </div>
