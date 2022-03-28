@@ -12,6 +12,9 @@ export const RequireAuth: React.FC = () => {
 
   const { isError, data, isLoading } = useQuery("user", fetchUser, {
     retry: false,
+    onSuccess: (data) => {
+      dispatch.auth.login(data);
+    },
   });
 
   store.dispatch.loading.setLoading(isLoading);
@@ -26,7 +29,6 @@ export const RequireAuth: React.FC = () => {
   }
 
   if (!auth.me?.screen_name) {
-    dispatch.auth.login(data!);
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
   return <Outlet />;

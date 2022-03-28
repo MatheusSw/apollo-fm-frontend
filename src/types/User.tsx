@@ -6,4 +6,7 @@ export type User = {
   report_text: string;
   report_time: string;
   report_day: string;
+  monthly_scrobbles: number;
+  monthly_artists: number;
+  monthly_loved_tracks: number;
 };

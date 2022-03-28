@@ -6,6 +6,8 @@ import React from "react";
 import { Strip, StripTypes } from "../../components/strip/Strip";
 import { Link } from "react-router-dom";
 
+const abbreviate = require("number-abbreviate");
+
 const Home: React.FC = () => {
   const { me } = useAuth();
 
@@ -36,8 +38,8 @@ const Home: React.FC = () => {
         <div className="col-span-3 grid gap-12 sm:grid-cols-1 lg:grid-cols-3">
           <Card
             title="Scrobbles"
-            icon="fas fa-play"
-            value="134"
+            icon="fas fa-headphones-simple"
+            value={abbreviate(me!.monthly_scrobbles, 1)}
             text="plays"
             status="same as last month"
             backgroundColor="bg-light-purple"
@@ -45,16 +47,16 @@ const Home: React.FC = () => {
           <Card
             title="Loved Tracks"
             icon="fas fa-heart"
-            value="32"
-            text="new lovers"
+            value={abbreviate(me!.monthly_loved_tracks, 1)}
+            text="new crushes"
             status="+3% vs last month"
             backgroundColor="bg-light-blue"
           />
           <Card
-            title="Listening time"
-            icon="fas fa-hourglass"
-            value="3h"
-            text="of pure music"
+            title="Artists"
+            icon="fas fa-compact-disc"
+            value={abbreviate(me!.monthly_artists, 1)}
+            text="musicians!"
             status="-25% vs last month"
             backgroundColor="bg-light-amber"
           />

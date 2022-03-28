@@ -6,6 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 import "react-datetime/css/react-datetime.css";
 import DateTime from "react-datetime";
 import moment from "moment";
+import { useQuery } from "react-query";
 
 const Settings: React.FC = () => {
   const [error, setError] = useState(false);
@@ -16,6 +17,7 @@ const Settings: React.FC = () => {
   const [lastFmUser, setLastFmUser] = useState("");
   const [reportDay, setReportDay] = useState("");
   const [reportTime, setReportTime] = useState("");
+  const { refetch } = useQuery("user");
 
   const handleSettingsSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -23,13 +25,13 @@ const Settings: React.FC = () => {
     setSuccess(false);
 
     try {
-      await apiClient.put("api/settings", {
+      await apiClient.put("api/user/settings", {
         report_text: reportText === "" ? me!.report_text : reportText,
-        lastfm_user: lastFmUser === "" ? me!.lastfm_user : lastFmUser,
+        lastfm_user: lastFmUser,
         report_day: reportDay === "" ? me!.report_day : reportDay,
         report_time: reportTime === "" ? me!.report_time : reportTime,
       });
-      //TODO Update user
+      await refetch();
       setSuccess(true);
     } catch {
       setError(true);
@@ -68,7 +70,8 @@ const Settings: React.FC = () => {
               onChange={(e) => setReportText(e.target.value)}
             />
             <p className="mt-2 text-sm text-gray-500">
-              Supported placeholders are: {"{artists}"}, {"{tracks}"}
+              Supported placeholders are: {"{artists}"}, {"{tracks}"},{" "}
+              {"{albums}"}, be mindful that twitter only allows 280 characters
             </p>
           </div>
         </div>
