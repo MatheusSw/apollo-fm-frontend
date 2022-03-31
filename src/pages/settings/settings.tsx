@@ -6,40 +6,44 @@ import { useAuth } from "../../hooks/useAuth";
 import "react-datetime/css/react-datetime.css";
 import DateTime from "react-datetime";
 import moment from "moment-timezone";
-
-import { useQuery } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 const Settings: React.FC = () => {
+  const queryClient = useQueryClient();
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const { me } = useAuth();
 
-  const [reportText, setReportText] = useState("");
-  const [lastFmUser, setLastFmUser] = useState("");
-  const [reportDay, setReportDay] = useState("");
-  const [reportTime, setReportTime] = useState("");
-  const { refetch } = useQuery("user");
+  const [reportText, setReportText] = useState(me!.report_text);
+  const [lastFmUser, setLastFmUser] = useState(me!.lastfm_user);
+  const [reportDay, setReportDay] = useState(me!.report_day);
+  const [reportTime, setReportTime] = useState(me!.report_time);
 
-  const handleSettingsSubmit = async (event: React.SyntheticEvent) => {
-    event.preventDefault();
-    setError(false);
-    setSuccess(false);
-
-    try {
-      await apiClient.put("api/user/settings", {
-        report_text: reportText === "" ? me!.report_text : reportText,
+  const mutation = useMutation(
+    () => {
+      return apiClient.put("api/user/settings", {
+        report_text: reportText,
         lastfm_user: lastFmUser,
-        report_day: reportDay === "" ? me!.report_day : reportDay,
-        report_time:
-          reportTime === ""
-            ? me!.report_time
-            : moment.utc(reportTime).format("YYYY-MM-DD HH:mm:ss"),
+        report_day: reportDay,
+        report_time: moment.utc(reportTime).format("YYYY-MM-DD HH:mm:ss"),
       });
-      await refetch();
-      setSuccess(true);
-    } catch {
-      setError(true);
+    },
+    {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries("user");
+        setSuccess(true);
+      },
+      onError: () => setError(true),
+      onMutate: () => {
+        setError(false);
+        setSuccess(false);
+      },
     }
+  );
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    mutation.mutate();
   };
 
   return (
@@ -47,7 +51,7 @@ const Settings: React.FC = () => {
       <Header title="Settings" />
       <form
         className="lg:1/4 flex w-full flex-col gap-4 md:w-2/4"
-        onSubmit={handleSettingsSubmit}
+        onSubmit={handleSubmit}
       >
         {error && (
           <Strip

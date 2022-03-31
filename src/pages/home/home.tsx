@@ -13,12 +13,15 @@ const Home: React.FC = () => {
 
   return (
     <div className="w-full">
-      <Header
-        title="Hey there, pretty!"
-        subtitle="It’s always nice to have you here"
-      >
-        <Avatar name={me!.name} picture_url={me!.profile_picture_url} />
-      </Header>
+      <div className="mb-10 flex items-center justify-between">
+        <Header
+          title="Hey there, pretty!"
+          subtitle="It’s always nice to have you here"
+        />
+        <div className="hidden md:block">
+          <Avatar name={me!.name} picture_url={me!.profile_picture_url} />
+        </div>
+      </div>
       <div>
         {!me!.lastfm_user && (
           <Strip
