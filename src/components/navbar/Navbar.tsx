@@ -4,8 +4,11 @@ import { ReactComponent as Logo } from "../../logo.svg";
 import NavButton from "../navbutton/Navbutton";
 import { apiClient } from "../../clients/apiClient";
 import { NavLink } from "react-router-dom";
+import { Avatar } from "../avatar/Avatar";
+import { useAuth } from "../../hooks/useAuth";
 
 const Navbar: React.FC = () => {
+  const { me } = useAuth();
   const handleLogout = async () => {
     await apiClient.post("api/logout");
   };
@@ -78,6 +81,10 @@ const Navbar: React.FC = () => {
               </div>
               <div className="mt-6">
                 <nav className="grid gap-y-4">
+                  <Avatar
+                    name={me!.name}
+                    picture_url={me!.profile_picture_url}
+                  />
                   {/*[TODO] Make a component out of this or adapt the NavButton*/}
                   <NavButton icon="fas fa-house" to="/" text="Home" />
                   <NavButton

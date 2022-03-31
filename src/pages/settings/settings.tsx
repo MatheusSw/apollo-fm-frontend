@@ -29,8 +29,8 @@ const Settings: React.FC = () => {
       });
     },
     {
-      onSuccess: (data) => {
-        queryClient.setQueryData("user", data);
+      onSuccess: async () => {
+        await queryClient.invalidateQueries("user");
         setSuccess(true);
       },
       onError: () => setError(true),
@@ -41,12 +41,17 @@ const Settings: React.FC = () => {
     }
   );
 
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    mutation.mutate();
+  };
+
   return (
     <div className="w-full">
       <Header title="Settings" />
       <form
         className="lg:1/4 flex w-full flex-col gap-4 md:w-2/4"
-        onSubmit={() => mutation.mutate()}
+        onSubmit={handleSubmit}
       >
         {error && (
           <Strip
