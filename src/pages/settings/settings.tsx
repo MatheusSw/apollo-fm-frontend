@@ -6,10 +6,10 @@ import { useAuth } from "../../hooks/useAuth";
 import "react-datetime/css/react-datetime.css";
 import DateTime from "react-datetime";
 import moment from "moment-timezone";
-
-import { useQuery } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 const Settings: React.FC = () => {
+  const queryClient = useQueryClient();
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const { me } = useAuth();
@@ -18,33 +18,35 @@ const Settings: React.FC = () => {
   const [lastFmUser, setLastFmUser] = useState(me!.lastfm_user);
   const [reportDay, setReportDay] = useState(me!.report_day);
   const [reportTime, setReportTime] = useState(me!.report_time);
-  const { refetch } = useQuery("user");
 
-  const handleSettingsSubmit = async (event: React.SyntheticEvent) => {
-    event.preventDefault();
-    setError(false);
-    setSuccess(false);
-
-    try {
-      await apiClient.put("api/user/settings", {
+  const mutation = useMutation(
+    () => {
+      return apiClient.put("api/user/settings", {
         report_text: reportText,
         lastfm_user: lastFmUser,
         report_day: reportDay,
         report_time: moment.utc(reportTime).format("YYYY-MM-DD HH:mm:ss"),
       });
-      await refetch();
-      setSuccess(true);
-    } catch {
-      setError(true);
+    },
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData("user", data);
+        setSuccess(true);
+      },
+      onError: () => setError(true),
+      onMutate: () => {
+        setError(false);
+        setSuccess(false);
+      },
     }
-  };
+  );
 
   return (
     <div className="w-full">
       <Header title="Settings" />
       <form
         className="lg:1/4 flex w-full flex-col gap-4 md:w-2/4"
-        onSubmit={handleSettingsSubmit}
+        onSubmit={() => mutation.mutate()}
       >
         {error && (
           <Strip
