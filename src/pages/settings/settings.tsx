@@ -5,7 +5,8 @@ import { Strip, StripTypes } from "../../components/strip/Strip";
 import { useAuth } from "../../hooks/useAuth";
 import "react-datetime/css/react-datetime.css";
 import DateTime from "react-datetime";
-import moment from "moment";
+import moment from "moment-timezone";
+
 import { useQuery } from "react-query";
 
 const Settings: React.FC = () => {
@@ -29,7 +30,10 @@ const Settings: React.FC = () => {
         report_text: reportText === "" ? me!.report_text : reportText,
         lastfm_user: lastFmUser,
         report_day: reportDay === "" ? me!.report_day : reportDay,
-        report_time: reportTime === "" ? me!.report_time : reportTime,
+        report_time:
+          reportTime === ""
+            ? me!.report_time
+            : moment.utc(reportTime).format("YYYY-MM-DD HH:mm:ss"),
       });
       await refetch();
       setSuccess(true);
@@ -119,20 +123,22 @@ const Settings: React.FC = () => {
             <DateTime
               dateFormat={false}
               /*Thanks javascript for not having a decent constructor*/
-              initialValue={moment(`1970-01-01T${me!.report_time}`)}
+              initialValue={moment
+                .utc(me!.report_time)
+                .tz(Intl.DateTimeFormat().resolvedOptions().timeZone)}
               inputProps={{
                 className: "rounded-lg border-0 focus:ring-magenta text-md",
               }}
               onChange={(e) => {
                 if (moment.isMoment(e)) {
-                  setReportTime(e.format("HH:mm:ssZ"));
+                  setReportTime(e.format());
                 }
               }}
             />
           </div>
           <span className="text-sm text-gray-500 opacity-50">
             Your current timezone is{" "}
-            {Intl.DateTimeFormat().resolvedOptions().timeZone.replace("_", " ")}
+            {Intl.DateTimeFormat().resolvedOptions().timeZone}
           </span>
         </div>
         <button
