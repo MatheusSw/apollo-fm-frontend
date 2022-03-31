@@ -14,9 +14,9 @@ const Settings: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const { me } = useAuth();
 
-  const [reportText, setReportText] = useState("");
-  const [lastFmUser, setLastFmUser] = useState("");
-  const [reportDay, setReportDay] = useState("");
+  const [reportText, setReportText] = useState(me!.report_text);
+  const [lastFmUser, setLastFmUser] = useState(me!.lastfm_user);
+  const [reportDay, setReportDay] = useState(me!.report_day);
   const [reportTime, setReportTime] = useState("");
   const { refetch } = useQuery("user");
 
