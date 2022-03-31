@@ -17,7 +17,7 @@ const Settings: React.FC = () => {
   const [reportText, setReportText] = useState(me!.report_text);
   const [lastFmUser, setLastFmUser] = useState(me!.lastfm_user);
   const [reportDay, setReportDay] = useState(me!.report_day);
-  const [reportTime, setReportTime] = useState("");
+  const [reportTime, setReportTime] = useState(me!.report_time);
   const { refetch } = useQuery("user");
 
   const handleSettingsSubmit = async (event: React.SyntheticEvent) => {
@@ -27,13 +27,10 @@ const Settings: React.FC = () => {
 
     try {
       await apiClient.put("api/user/settings", {
-        report_text: reportText === "" ? me!.report_text : reportText,
+        report_text: reportText,
         lastfm_user: lastFmUser,
-        report_day: reportDay === "" ? me!.report_day : reportDay,
-        report_time:
-          reportTime === ""
-            ? me!.report_time
-            : moment.utc(reportTime).format("YYYY-MM-DD HH:mm:ss"),
+        report_day: reportDay,
+        report_time: moment.utc(reportTime).format("YYYY-MM-DD HH:mm:ss"),
       });
       await refetch();
       setSuccess(true);
