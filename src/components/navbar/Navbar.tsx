@@ -6,11 +6,15 @@ import { apiClient } from "../../clients/apiClient";
 import { NavLink } from "react-router-dom";
 import { Avatar } from "../avatar/Avatar";
 import { useAuth } from "../../hooks/useAuth";
+import { store } from "../../stores/store";
 
 const Navbar: React.FC = () => {
   const { me } = useAuth();
-  const handleLogout = async () => {
+
+  const handleLogout = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
     await apiClient.post("api/logout");
+    store.dispatch.auth.logout();
   };
 
   return (
